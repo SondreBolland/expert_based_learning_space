@@ -81,4 +81,5 @@ python main.py
 
 The included example JSON files and saved query states allow you to test the workflow end-to-end.
 This will generate the learning space shown in `example_hasse_diagram.png`.
+
 ---
