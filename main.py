@@ -43,8 +43,6 @@ def run_query_loop(qm: QueryManager, task_dict: dict, state_filename: str, verbo
 
 def summarize_learning_space(surmise_function: SurmiseFunction, item_ids: list):
     """Print resulting knowledge states and Hasse diagram from surmise function."""
-    #states = surmise_to_states(surmise_function)
-
     # Implications from the Surmise function
     print("\nDependencies:")
     for item in item_ids:
