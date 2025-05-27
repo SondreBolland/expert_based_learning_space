@@ -66,7 +66,7 @@ python main.py
 * `initialize_learning_space(data)`: Creates an empty learning space with all task IDs.
 * `load_tasks(data)`: Retrieves task metadata and builds a lookup dictionary.
 * `run_query_loop(qm, task_dict, state_filename, verbose)`: Presents queries via GUI, records answers, saves state.
-* `summarize_learning_space(surmise_function, item_ids)`: Prints knowledge states and plots the Hasse diagram.
+* `summarize_learning_space(surmise_function, item_ids)`: ~~Prints knowledge states and plots the Hasse diagram.~~ Prints implications from surmise function. Hassediagram through knowledge states is not feasible when the number of items are too high.
 
 ---
 
