@@ -44,7 +44,7 @@ Edit the parameters in the `main()` function to specify:
 Run the script:
 
 ```bash
-python main_script.py
+python main.py
 ```
 
 ---
