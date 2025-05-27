@@ -2,6 +2,7 @@ from typing import List, Optional
 from model.query import Query
 from model.learning_space import LearningSpace
 import json
+import os
 
 class QueryManager:
     def __init__(self, learning_space: LearningSpace, queries: Optional[List[Query]] = None):
@@ -52,7 +53,6 @@ class QueryManager:
         self.answered_queries.append(query)
         self.deactivate_queries([query])
         self.learning_space.apply_query(query)  # Update the learning space with the new query
-        print(f"Active query size: {len(self.active_queries)}")
 
     def deactivate_queries(self, queries_to_deactivate: List[Query]):
         """Deactivate queries that are no longer necessary."""
@@ -61,25 +61,43 @@ class QueryManager:
                 self.active_queries.remove(query)
                 self.deactivated_queries.append(query)
 
-    def save_state(self, filepath: str):
-        """Save the current state of queries to a file."""
-        state = {
-            "answered": [q.__dict__ for q in self.answered_queries],
-            "active": [q.__dict__ for q in self.active_queries],
-            "deactivated": [q.__dict__ for q in self.deactivated_queries]
-        }
-        with open(filepath, "w", encoding="utf-8") as f:
-            json.dump(state, f, indent=2)
+    def save_state(self, filename):
+        # Collect answered queries and answers into a list of dicts
+        answers_list = []
+        for query in self.answered_queries:
+            answers_list.append({
+                "antecedent": list(query.antecedent),
+                "question": query.question,
+                "answer": query.answer  # assuming 'answer' attribute holds the expert's answer
+            })
+        with open(filename, "w") as f:
+            json.dump({"answers": answers_list}, f, indent=2)
+        print(f"Saved {len(answers_list)} answers to {filename}")
 
-    def load_state(self, filepath: str):
-        """Load the state from a saved file."""
-        with open(filepath, "r", encoding="utf-8") as f:
-            state = json.load(f)
+    def load_state(self, filename):
+        if not os.path.exists(filename):
+            print(f"No saved state file found at {filename}")
+            return
 
-        # Rebuild the query lists
-        self.answered_queries = [Query(**q) for q in state.get("answered", [])]
-        self.active_queries = [Query(**q) for q in state.get("active", [])]
-        self.deactivated_queries = [Query(**q) for q in state.get("deactivated", [])]
+        try:
+            with open(filename, "r") as f:
+                data = json.load(f)
+
+            for entry in data.get("answers", []):
+                antecedent = entry["antecedent"]
+                question = entry["question"]
+                answer = entry["answer"]
+                
+                # Create a Query object with loaded data
+                query = Query(antecedent, question, answer)
+                # Record the loaded answer
+                self.record_answer(query, answer)
+
+            print(f"Loaded {len(data.get('answers', []))} answers from {filename}")
+        except:
+            print("Nothing to load")
+            
+        print(f"Active query size: {len(self.active_queries)}")
 
     def n_active_queries(self):
         """Return the number of active queries."""

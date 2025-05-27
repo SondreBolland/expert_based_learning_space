@@ -1,0 +1,34 @@
+{
+    "DummyDomain": {
+      "DummyCapacity": {
+        "id": "DM-DU",
+        "tasks": [
+          {
+            "id": "a",
+            "text": "a",
+            "code": "a",
+            "solution": "a"
+          },
+          {
+            "id": "b",
+            "text": "b",
+            "code": "b",
+            "solution": "b"
+          },
+          {
+            "id": "c",
+            "text": "c",
+            "code": "c",
+            "solution": "c"
+          },
+          {
+            "id": "d",
+            "text": "d",
+            "code": "d",
+            "solution": "d"
+          }
+        ]
+      }
+    }
+  }
+  

@@ -3,6 +3,8 @@ from model.surmise_function import SurmiseFunction
 from model.query import Query
 from model.inference.hs_test import hs_test
 
+import copy
+
 
 class LearningSpace:
     def __init__(self, initial_items: List[str], surmise_function: SurmiseFunction):
@@ -16,9 +18,9 @@ class LearningSpace:
         self.surmise_function = surmise_function
         self.pending_table = []  # Queries that need to be reconsidered
         self.r_store = []  # Temporary store for pending queries
-        #self.accepted_responses = set()  # Accepted positive responses (queries)
         self.P_yes = set()
         self.P_no = set()
+        self.queries_answered = 0
         
 
     def apply_query(self, query: Query):
@@ -44,65 +46,103 @@ class LearningSpace:
         elif query.answer == 0: 
             self.P_no.add(query)
             self.draw_inference()
+        self.queries_answered += 1
+        
+    def run_second_stage(self):
+        """
+        Run the second stage of the adapted QUERY algorithm.
+        Process the pending table using the HS-test until it is empty.
+        """
+        count = 0
+        while self.pending_table:
+            self.r_store = list(self.pending_table)
+            old_surmise = copy.deepcopy(self.surmise_function)
+            self.pending_table = []
+
+            for query in self.r_store:
+                count += 1
+                print(count)
+                if hs_test(query, self.surmise_function):
+                    # Accept the query
+                    self.P_yes.add(query)
+                    self.surmise_function.add_clause(query.question, set(query.antecedent))
+                    self.draw_inference()
+                else:
+                    # Not implementable, try again later
+                    print(f"Could not implement query: {query}")
+                    self.pending_table.append(query)
+
+            if old_surmise == self.surmise_function:
+                break
+            
+        self.r_store = []
 
         
     def draw_inference(self):
         """
-        Apply the four inference rules [IR1]-[IR4] repeatedly to P_yes and P_no
-        until no new queries can be inferred.
+        Apply the four inference rules [IR1]-[IR4] to the current sets of positive (P_yes)
+        and negative (P_no) queries until no further inferences can be made.
         """
         changed = True
         while changed:
             changed = False
             new_yes = set()
-            new_no  = set()
+            new_no = set()
 
-            # IR1 & IR2: positive inferences from P_yes × P_yes
+            # Convert current positive/negative queries into lookup tables
+            P_yes_lookup = {(frozenset(q.antecedent), q.question) for q in self.P_yes}
+            P_no_lookup = {(frozenset(q.antecedent), q.question) for q in self.P_no}
+
+            # Apply IR1 and IR2: Positive × Positive
             for q1 in self.P_yes:
+                A, p = set(q1.antecedent), q1.question
                 for q2 in self.P_yes:
-                    # both must be positive queries
-                    A, p = q1.antecedent, q1.question
-                    B, r = q2.antecedent, q2.question
+                    B, q = set(q2.antecedent), q2.question
 
-                    # only consider if p ∈ B
+                    # IR1: If A→p and B→q, and p ∈ B, then (A ∪ {p})→q
                     if p in B:
-                        # IR1: from A→p and B→r infer (A∪{p})→r
-                        antecedent1 = A.union({p})
-                        inferred1 = Query(list(antecedent1), r, answer=1)
-                        if inferred1 not in self.P_yes:
-                            new_yes.add(inferred1)
+                        inferred = Query(list(A | {p}), q, answer=1)
+                        key = (frozenset(inferred.antecedent), inferred.question)
+                        if key not in P_yes_lookup:
+                            new_yes.add(inferred)
+                            P_yes_lookup.add(key)
 
-                        # IR2: from A→p and B→r infer A→r
-                        inferred2 = Query(list(A), r, answer=1)
-                        if inferred2 not in self.P_yes:
-                            new_yes.add(inferred2)
+                    # IR2: If A→p and B→q, and p ∈ B, then A→q
+                    if p in B:
+                        inferred = Query(list(A), q, answer=1)
+                        key = (frozenset(inferred.antecedent), inferred.question)
+                        if key not in P_yes_lookup:
+                            new_yes.add(inferred)
+                            P_yes_lookup.add(key)
 
-            # IR3 & IR4: negative inferences from (P_yes × P_no) and (P_no × P_yes)
+            # Apply IR3 and IR4: Positive × Negative
             for q_pos in self.P_yes:
+                A, p = set(q_pos.antecedent), q_pos.question
                 for q_neg in self.P_no:
-                    A, p = q_pos.antecedent, q_pos.question
-                    B, r = q_neg.antecedent, q_neg.question
+                    B, q = set(q_neg.antecedent), q_neg.question
 
-                    # IR3: from B→¬r and (B∪{r})→p infer B→¬p
-                    #   here q_neg is B→¬r, q_pos is (B∪{r})→p if p∈B∪{r}
-                    if r in B and p in (B.union({r})):
-                        inferred3 = Query(list(B), p, answer=0)
-                        if inferred3 not in self.P_no:
-                            new_no.add(inferred3)
+                    # IR3: If B→¬q and (B ∪ {q})→p, then B→¬p
+                    if (B | {q}) == A and p == q_pos.question:
+                        inferred = Query(list(B), p, answer=0)
+                        key = (frozenset(inferred.antecedent), inferred.question)
+                        if key not in P_no_lookup:
+                            new_no.add(inferred)
+                            P_no_lookup.add(key)
 
-                    # IR4: from A→p and (A∪{p})→¬r infer (A∪{p})→¬p
-                    #   here q_pos is A→p, q_neg is (A∪{p})→¬r if r∈A∪{p}
-                    if p in A and r in A.union({p}):
-                        antecedent4 = A.union({p})
-                        inferred4 = Query(list(antecedent4), r, answer=0)
-                        if inferred4 not in self.P_no:
-                            new_no.add(inferred4)
+                    # IR4: If A→p and (A ∪ {p})→¬q, then (A ∪ {p})→¬q
+                    if (A | {p}) == set(q_neg.antecedent) and q == q_neg.question:
+                        inferred = Query(list(A | {p}), q, answer=0)
+                        key = (frozenset(inferred.antecedent), inferred.question)
+                        if key not in P_no_lookup:
+                            new_no.add(inferred)
+                            P_no_lookup.add(key)
 
-            # if we found any new inferences, add them and repeat
+            # If we inferred anything new, update and keep looping
             if new_yes or new_no:
                 self.P_yes.update(new_yes)
                 self.P_no.update(new_no)
                 changed = True
+
 
 
     def process_pending_queries(self):
@@ -155,4 +195,9 @@ class LearningSpace:
         for q in self.r_store:
             ant = "{" + ",".join(sorted(q.antecedent)) + "}"
             lines.append(f"  {ant} → {q.question}")
+            
+        # 7) Queries answered vs queries infered
+        lines.append(f"\nQueries answered: {self.queries_answered}")
+        queries_infered = len(self.P_yes) + len(self.P_no) - self.queries_answered
+        lines.append(f"Queries infered: {queries_infered}")
         return "\n".join(lines)

@@ -29,8 +29,8 @@ class Query:
             return False
         return (
             set(self.antecedent) == set(other.antecedent) and
-            self.question == other.question and
-            self.answer == other.answer
+            self.question == other.question # and
+            #self.answer == other.answer
         )
 
     def __hash__(self) -> int:

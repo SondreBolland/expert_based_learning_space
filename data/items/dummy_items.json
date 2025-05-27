@@ -1,0 +1,40 @@
+{
+    "DummyDomain": {
+      "DummyCapacity": {
+        "id": "DM-DU",
+        "tasks": [
+          {
+            "id": "Booleans",
+            "text": "Task Booleans: Dummy task description.",
+            "code": "print('bool')",
+            "solution": "Prints bool"
+          },
+          {
+            "id": "Conditionals",
+            "text": "Task Conditionals: Dummy task description.",
+            "code": "print('Conditionals')",
+            "solution": "Prints Conditionals"
+          },
+          {
+            "id": "Unbounded_loops",
+            "text": "Task Unbounded_loops: Dummy task description.",
+            "code": "print('Unbounded_loops')",
+            "solution": "Prints Unbounded_loops"
+          },
+          {
+            "id": "Functions",
+            "text": "Task Functions: Dummy task description.",
+            "code": "print('Functions')",
+            "solution": "Prints Functions"
+          },
+          {
+            "id": "Variables",
+            "text": "Task Variables: Dummy task description.",
+            "code": "print('Variables')",
+            "solution": "Prints Variables"
+          }
+        ]
+      }
+    }
+  }
+  

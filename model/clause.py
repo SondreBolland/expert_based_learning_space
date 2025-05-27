@@ -13,6 +13,10 @@ class Clause:
         # Ensure that the item is always part of the prerequisites
         self.prerequisites = frozenset(prerequisites) | {item}  # Union with item itself
         self.conclusion = item  # The item is the conclusion of this clause
+        
+    def is_satisfied_by(self, knowledge_state: Set[str]) -> bool:
+        # A clause is satisfied if all prerequisites and the item are in the state
+        return self.prerequisites.union({self.conclusion}).issubset(knowledge_state)
 
     def __repr__(self):
         return f"Clause({sorted(self.prerequisites)} ⊢ {self.conclusion})"

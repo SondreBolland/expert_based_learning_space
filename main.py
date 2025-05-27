@@ -1,4 +1,3 @@
-
 import os
 
 import data.get_data as get_data
@@ -10,57 +9,84 @@ from data.generate_queries import generate_queries_by_block
 from model.surmise_function import SurmiseFunction
 from model.learning_space import LearningSpace
 
-
 from utils.hasse import hasse
+from utils.surmise_to_implications import surmise_to_implications
+from utils.surmise_to_states import surmise_to_states
 
 
-# Load items
-data = get_data.data
-item_ids = get_data.get_all_task_ids(data)
-items = get_data.get_all_tasks(data)
-print(f'Number of tasks: {len(items)}')
-#print(items)
+def initialize_learning_space(data) -> LearningSpace:
+    """Create an empty learning space with all item IDs."""
+    item_ids = get_data.get_all_task_ids(data)
+    surmise_function = SurmiseFunction()
+    return LearningSpace(item_ids, surmise_function)
 
-# Empty learning space
-surmise_function = SurmiseFunction()
-learning_space = LearningSpace(item_ids, surmise_function)
 
-#ask_experts_console.ask_experts(learning_space, items, "item_states.json", load_answers=False, verbose=False)
+def load_tasks(data):
+    """Retrieve task metadata and ID dictionary."""
+    tasks = get_data.get_all_tasks(data)
+    task_dict = {task["id"]: task for task in tasks}
+    return tasks, task_dict
 
-# Load existing answers
-load_answers = False
-state_filename = ""
-verbose = True
 
-task_ids = learning_space.items
-task_dict = {task["id"]: task for task in items}
+def run_query_loop(qm: QueryManager, task_dict: dict, state_filename: str, verbose: bool):
+    """Main loop: present queries to expert via GUI and record answers."""
+    while (query := qm.get_next_query()):
+        if query.question in qm.learning_space.items:
+            response = ask_experts_gui.run_gui(query.antecedent, query.question, task_dict)
+            qm.record_answer(query, response)
+            qm.save_state(state_filename)
+            if verbose:
+                print(qm.learning_space)
+            print('-' * 60)
+        else:
+            print(f"Skipping query {query.question} (not in learning space).")
 
-if load_answers:
-    qm =    (learning_space)
-    qm.load_state(state_filename)
-else:
+
+def summarize_learning_space(surmise_function: SurmiseFunction, item_ids: list):
+    """Print resulting knowledge states and Hasse diagram from surmise function."""
+    states = surmise_to_states(surmise_function)
+    implications = surmise_to_implications(surmise_function)
+
+    print("\nKnowledge States:")
+    for state in states:
+        print(state)
+
+    #hasse(imp=implications, items=len(item_ids), labels=item_ids)
+
+
+def main():
+    # Parameters
+    load_answers = True
+    state_filename = "item_states.json"
+    items_filename = "example_items.json"
+    verbose = True
+
+    # Step 1: Load data
+    data = get_data.get_data(items_filename)
+    tasks, task_dict = load_tasks(data)
+    print(f'Number of tasks: {len(tasks)}')
+
+    # Step 2: Create empty learning space
+    learning_space = initialize_learning_space(data)
+    task_ids = learning_space.items
+
+    # Step 3: Generate and manage queries
     queries = generate_queries_by_block(task_ids)
     qm = QueryManager(learning_space, queries)
+    if load_answers:
+        qm.load_state(state_filename)
 
-if verbose:
-    print(f'Number of queries: {len(qm.active_queries)}')
-else:
-    # Clear terminal
-    os.system('cls' if os.name == 'nt' else 'clear')
-while (query := qm.get_next_query()):
-    # Check if the query is compatible with the learning space before asking the expert
-    if query.question in learning_space.items:
-        response = ask_experts_gui.run_gui(query.antecedent, query.question, task_dict)
-        qm.record_answer(query, response)
-        #qm.save_state(state_filename)
-        if verbose:
-            print(learning_space)
-        print('-' * 60)
-    else:
-        print(f"Skipping query {query.question} as it is not relevant to the current learning space.")
+    # Step 4: Ask expert queries (GUI)
+    run_query_loop(qm, task_dict, state_filename, verbose)
+
+    # Step 5: Finalize learning space
+    print("\nFinal Learning Space:")
+    print(learning_space)
+    learning_space.run_second_stage()
+
+    # Step 6: Output knowledge states and implications
+    summarize_learning_space(learning_space.surmise_function, task_ids)
 
 
-
-
-
-hasse(surmise_function)
+if __name__ == "__main__":
+    main()

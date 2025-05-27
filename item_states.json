@@ -1,0 +1,220 @@
+{
+  "answers": [
+    {
+      "antecedent": [
+        "b"
+      ],
+      "question": "c",
+      "answer": 1
+    },
+    {
+      "antecedent": [
+        "b"
+      ],
+      "question": "d",
+      "answer": 0
+    },
+    {
+      "antecedent": [
+        "a"
+      ],
+      "question": "c",
+      "answer": 0
+    },
+    {
+      "antecedent": [
+        "a"
+      ],
+      "question": "d",
+      "answer": 1
+    },
+    {
+      "antecedent": [
+        "d"
+      ],
+      "question": "a",
+      "answer": 0
+    },
+    {
+      "antecedent": [
+        "b"
+      ],
+      "question": "a",
+      "answer": 0
+    },
+    {
+      "antecedent": [
+        "d"
+      ],
+      "question": "c",
+      "answer": 0
+    },
+    {
+      "antecedent": [
+        "a"
+      ],
+      "question": "b",
+      "answer": 0
+    },
+    {
+      "antecedent": [
+        "c"
+      ],
+      "question": "d",
+      "answer": 0
+    },
+    {
+      "antecedent": [
+        "c"
+      ],
+      "question": "a",
+      "answer": 0
+    },
+    {
+      "antecedent": [
+        "d"
+      ],
+      "question": "b",
+      "answer": 0
+    },
+    {
+      "antecedent": [
+        "c"
+      ],
+      "question": "b",
+      "answer": 0
+    },
+    {
+      "antecedent": [
+        "a",
+        "c"
+      ],
+      "question": "b",
+      "answer": 0
+    },
+    {
+      "antecedent": [
+        "c",
+        "b"
+      ],
+      "question": "a",
+      "answer": 0
+    },
+    {
+      "antecedent": [
+        "c",
+        "b"
+      ],
+      "question": "d",
+      "answer": 0
+    },
+    {
+      "antecedent": [
+        "a",
+        "d"
+      ],
+      "question": "c",
+      "answer": 0
+    },
+    {
+      "antecedent": [
+        "d",
+        "c"
+      ],
+      "question": "a",
+      "answer": 0
+    },
+    {
+      "antecedent": [
+        "a",
+        "b"
+      ],
+      "question": "d",
+      "answer": 1
+    },
+    {
+      "antecedent": [
+        "a",
+        "d"
+      ],
+      "question": "b",
+      "answer": 0
+    },
+    {
+      "antecedent": [
+        "d",
+        "b"
+      ],
+      "question": "c",
+      "answer": 1
+    },
+    {
+      "antecedent": [
+        "a",
+        "c"
+      ],
+      "question": "d",
+      "answer": 1
+    },
+    {
+      "antecedent": [
+        "d",
+        "b"
+      ],
+      "question": "a",
+      "answer": 0
+    },
+    {
+      "antecedent": [
+        "a",
+        "b"
+      ],
+      "question": "c",
+      "answer": 1
+    },
+    {
+      "antecedent": [
+        "d",
+        "c"
+      ],
+      "question": "b",
+      "answer": 0
+    },
+    {
+      "antecedent": [
+        "a",
+        "d",
+        "b"
+      ],
+      "question": "c",
+      "answer": 1
+    },
+    {
+      "antecedent": [
+        "a",
+        "d",
+        "c"
+      ],
+      "question": "b",
+      "answer": 0
+    },
+    {
+      "antecedent": [
+        "d",
+        "c",
+        "b"
+      ],
+      "question": "a",
+      "answer": 0
+    },
+    {
+      "antecedent": [
+        "a",
+        "c",
+        "b"
+      ],
+      "question": "d",
+      "answer": 1
+    }
+  ]
+}

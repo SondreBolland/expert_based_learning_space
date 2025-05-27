@@ -21,7 +21,7 @@ class ToolTip:
         tw.wm_overrideredirect(True)
         tw.configure(bg="#ffffe0", padx=6, pady=4)
         label = tk.Label(tw, text=self.text, justify='left', bg="#ffffe0", relief='solid', borderwidth=1,
-                         font=("Helvetica", 16))
+                         font=("Helvetica", 24))
         label.pack()
 
         tw.wm_geometry(f"+{x}+{y}")

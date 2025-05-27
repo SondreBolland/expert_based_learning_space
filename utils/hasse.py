@@ -20,7 +20,7 @@ def hasse(imp, items, dir_path = None, labels = None):
     implications = list(imp)
 
     # generate partially ordered set
-    for i in implications:
+    for i in implications[:]:
         if (i[1], i[0]) in implications:
             if i[0] in parallel_items:
                 parallel_items[i[0]].append(i[1])
@@ -58,14 +58,14 @@ def hasse(imp, items, dir_path = None, labels = None):
     for i in range(len(implications)):
         implications[i] = (implications[i][1], implications[i][0])
 
-    graph = pydot.Dot(graph_type='graph')
-    print(implications)
-    if labels:
-        for i in implications:
-            graph.add_edge(pydot.Edge(str(labels[int(i[0])]), str(labels[int(i[1])])))
-    else:
-        for i in implications:
-            graph.add_edge(pydot.Edge(i[0], i[1]))
+    graph = pydot.Dot(graph_type='digraph')
+    graph.set_rankdir("BT")  # Draw from bottom to top
+    for i in implications:
+        # Ensure you're using integers for label lookup
+        src_label = i[1]
+        tgt_label = i[0]
+        graph.add_edge(pydot.Edge(src_label, tgt_label))
+
 
     # standalone nodes
     for i in range(items):
@@ -81,7 +81,8 @@ def hasse(imp, items, dir_path = None, labels = None):
                     parallel = True
                     break
             if not parallel:
-                graph.add_node(pydot.Node(i))
+                node_label = i if labels is None else labels[i]
+                graph.add_node(pydot.Node(node_label))
 
     fout = tempfile.NamedTemporaryFile(mode = 'w+t', dir = dir_path, suffix=".png", delete = False)
     graph.write(fout.name, format="png")
@@ -89,6 +90,6 @@ def hasse(imp, items, dir_path = None, labels = None):
     plt.axis('off')
     plt.imshow(img)
     plt.show()
-    os.remove(fout.name)
+    #os.remove(fout.name)
 
     return [list(set(value)) for key, value in parallel_items.items()]

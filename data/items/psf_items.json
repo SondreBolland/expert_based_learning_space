@@ -1,0 +1,233 @@
+{
+  "Expressions": {
+    "Evaluate": {
+      "id": "Ex-E",
+      "tasks": [
+        {
+          "id": "Ex-E-01",
+          "text": "What are the types and values of the following expressions?",
+          "code": "2 + 3 * 5\n\"Hello\" + \"Madam\"",
+          "solution": "(int, 17), (str, 'HelloMadam')"
+        },
+        {
+          "id": "Ex-E-02",
+          "text": "What are the types and values of the following expressions?",
+          "code": "1984 % 4, (1984 % 4) == 0",
+          "solution": "(int, 0), (bool, True)"
+        },
+        {
+          "id": "Ex-E-03",
+          "text": "What are the types and values of the following expressions?",
+          "code": "\"4\" + \"5\"\n2 + 2 == 4 or 2 + 2 == 5",
+          "solution": "(str, '45'), (bool, True)"
+        }
+      ]
+    },
+    "Model": {
+      "id": "Ex-M",
+      "tasks": [
+        {
+          "id": "Ex-M-01",
+          "text": "Select one or more variables to record a date, so that you can calculate the next day's date simply.",
+          "code": "",
+          "solution": "year, month, day"
+        },
+        {
+          "id": "Ex-M-02",
+          "text": "Choose one or more variables to record an hour of the day, so that you can calculate durations between two moments.",
+          "code": "",
+          "solution": "hour, minute"
+        },
+        {
+          "id": "Ex-M-03",
+          "text": "Choose one or more variables to record a person's name and surname.",
+          "code": "",
+          "solution": "first_name, last_name"
+        },
+        {
+          "id": "Ex-M-04",
+          "text": "Choose one or more variables to record information that a year is leap or not.",
+          "code": "",
+          "solution": "is_leap_year"
+        }
+      ]
+    },
+    "Anticipate": {
+      "id": "Ex-A",
+      "tasks": [
+        {
+          "id": "Ex-A-01",
+          "text": "Write an expression dependent on three variables a, b and c to calculate the discriminant b² - 4ac.",
+          "code": "b**2 - 4*a*c",
+          "solution": "b**2 - 4*a*c"
+        },
+        {
+          "id": "Ex-A-02",
+          "text": "Write an expression to calculate the product of integers from 1 to 10.",
+          "code": "1*2*3*4*5*6*7*8*9*10",
+          "solution": "3628800"
+        }
+      ]
+    },
+    "Decompose": {
+      "id": "Ex-D",
+      "tasks": [
+        {
+          "id": "Ex-D-01",
+          "text": "Rewrite the expression by naming d the expression calculated twice.",
+          "code": "(-b + sqrt(b*b - 4*a*c))/(2*a) + (-b - sqrt(b*b - 4*a*c))/(2*a)",
+          "solution": "d = sqrt(b*b - 4*a*c)\nresult = (-b + d)/(2*a) + (-b - d)/(2*a)"
+        },
+        {
+          "id": "Ex-D-02",
+          "text": "Rewrite the expression by naming t the expression calculated twice.",
+          "code": "str(int(sqrt(2*100000/9.81))//60) + \" mn \" + str(int(sqrt(2*100000/9.81))%60) + \" s\"",
+          "solution": "t = int(sqrt(2*100000/9.81))\nminutes = t // 60\nseconds = t % 60\nresult = str(minutes) + \" mn \" + str(seconds) + \" s\""
+        }
+      ]
+    },
+    "Generalize": {
+      "id": "Ex-G",
+      "tasks": [
+        {
+          "id": "Ex-G-01",
+          "text": "Rewrite the expression, replacing constant 30 with a variable.",
+          "code": "9.81 * 30**2 / 2",
+          "solution": "9.81 * time**2 / 2"
+        },
+        {
+          "id": "Ex-G-02",
+          "text": "Rewrite the expression, replacing constant 5 with a variable.",
+          "code": "250 * (1+5/100)**3",
+          "solution": "250 * (1+rate/100)**3"
+        }
+      ]
+    }
+  },
+  "Assignments and sequences": {
+    "Evaluate": {
+      "id": "AS-E",
+      "tasks": [
+        {
+          "id": "AS-E-01",
+          "text": "What is the output of the following program?",
+          "code": "num = 2\nnum = num + 3\nprint(num)",
+          "solution": "5"
+        },
+        {
+          "id": "AS-E-02",
+          "text": "What will this program print?",
+          "code": "x = 5\nx = x * 2\nprint(x)",
+          "solution": "10"
+        }
+      ]
+    },
+    "Model": {
+      "id": "AS-M",
+      "tasks": [
+        {
+          "id": "AS-M-01",
+          "text": "Choose a variable name suitable for storing the number of apples in a basket.",
+          "code": "",
+          "solution": "apple_count"
+        },
+        {
+          "id": "AS-M-02",
+          "text": "Choose a variable name suitable for storing a user's email address.",
+          "code": "",
+          "solution": "email_address"
+        }
+      ]
+    },
+    "Anticipate": {
+      "id": "AS-A",
+      "tasks": [
+        {
+          "id": "AS-A-01",
+          "text": "What value will variable `result` hold after this code runs?",
+          "code": "result = 10\nresult = result + 5 * 2",
+          "solution": "20"
+        }
+      ]
+    },
+    "Decompose": {
+      "id": "AS-D",
+      "tasks": [
+        {
+          "id": "AS-D-01",
+          "text": "Break down this operation into smaller steps:",
+          "code": "total = price + tax - discount",
+          "solution": "subtotal = price + tax\ntotal = subtotal - discount"
+        }
+      ]
+    },
+    "Generalize": {
+      "id": "AS-G",
+      "tasks": [
+        {
+          "id": "AS-G-01",
+          "text": "Rewrite the expression replacing 30 with a variable for time.",
+          "code": "9.81 * 30",
+          "solution": "9.81 * time"
+        }
+      ]
+    }
+  },
+  "Bounded loops": {
+    "Evaluate": {
+      "id": "BL-E",
+      "tasks": [
+        {
+          "id": "BL-E-01",
+          "text": "What does this program print?",
+          "code": "for i in range(3):\n    print(i)",
+          "solution": "0\n1\n2"
+        }
+      ]
+    },
+    "Decompose": {
+      "id": "BL-D",
+      "tasks": [
+        {
+          "id": "BL-D-01",
+          "text": "What steps are needed to print all even numbers from 0 to 10 using a loop?",
+          "code": "",
+          "solution": "for i in range(0, 11, 2):\n    print(i)"
+        }
+      ]
+    },
+    "Anticipate": {
+      "id": "BL-A",
+      "tasks": [
+        {
+          "id": "BL-A-01",
+          "text": "What will be the output of the loop?",
+          "code": "for x in range(2, 10, 3):\n    print(x)",
+          "solution": "2\n5\n8"
+        }
+      ]
+    },
+    "Model": {
+      "id": "BL-M",
+      "tasks": [
+        {
+          "id": "BL-M-01",
+          "text": "Choose a loop variable name that clearly indicates its role in counting down from 10 to 1.",
+          "code": "",
+          "solution": "countdown"
+        }
+      ]
+    },
+    "Generalize": {
+      "id": "BL-G",
+      "tasks": [
+        {
+          "id": "BL-G-01",
+          "text": "Rewrite a loop to work for any input number n instead of looping to a hardcoded value.",
+          "code": "",
+          "solution": "for i in range(n):\n    print(i)"
+        }
+      ]
+    }
+  }
+}

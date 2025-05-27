@@ -20,7 +20,10 @@ class SurmiseFunction:
         clause = Clause(prerequisites, item)
         if item not in self.surmise:
             self.surmise[item] = []
-        self.surmise[item].append(clause)
+        # Only add if clause is not already in the list
+        if clause not in self.surmise[item]:
+            self.surmise[item].append(clause)
+
 
     def get_clauses(self, item: str) -> List[Clause]:
         """
@@ -33,4 +36,31 @@ class SurmiseFunction:
 
     def __repr__(self):
         return f"SurmiseFunction(surmise={self.surmise})"
+
+    def __eq__(self, other):
+        if not isinstance(other, SurmiseFunction):
+            return False
+
+        if set(self.surmise.keys()) != set(other.surmise.keys()):
+            return False
+
+        for item in self.surmise:
+            # Compare clauses as sets (ignoring order)
+            self_clauses = set(self.surmise[item])
+            other_clauses = set(other.surmise[item])
+            if self_clauses != other_clauses:
+                return False
+
+        return True
+
+    def __hash__(self):
+        # Must convert unhashable types like lists/sets to sorted tuples
+        return hash(
+            tuple(
+                sorted(
+                    (item, tuple(sorted(self.surmise[item])))
+                    for item in sorted(self.surmise)
+                )
+            )
+        )
 
