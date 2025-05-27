@@ -42,7 +42,15 @@ def run_query_loop(qm: QueryManager, task_dict: dict, state_filename: str, verbo
 
 
 def summarize_learning_space(surmise_function: SurmiseFunction, item_ids: list):
-    """Print resulting knowledge states and Hasse diagram from surmise function."""
+    """Summarize the learning space"""
+    if len(item_ids) > 20:
+        display_dependencies(surmise_function, item_ids)
+    else:
+        display_hasse(surmise_function, item_ids)
+    
+            
+def display_dependencies(surmise_function: SurmiseFunction, item_ids: list):
+    """Print resulting item dependencies from surmise function"""
     # Implications from the Surmise function
     print("\nDependencies:")
     for item in item_ids:
@@ -59,12 +67,15 @@ def summarize_learning_space(surmise_function: SurmiseFunction, item_ids: list):
             print(f"{all_implications} ⊢ {target_item}")
         else:
             print("No dependencies")
-
-    #print("\nKnowledge States:")
-    #for state in states:
-    #    print(state)
-
-    #plot_hasse(states)
+            
+def display_hasse(surmise_function: SurmiseFunction, item_ids: list):
+    """Print resulting knowledge states and Hasse diagram from surmise function."""
+    knowledge_states = surmise_to_states(surmise_function)
+    print("\nKnowledge States:")
+    for state in knowledge_states:
+        print(list(state))
+        
+    plot_hasse(knowledge_states)
 
 
 def main():
