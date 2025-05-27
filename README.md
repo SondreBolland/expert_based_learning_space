@@ -37,7 +37,7 @@ The tool loads a collection of programming tasks, generates expert queries about
 Edit the parameters in the `main()` function to specify:
 
 * `items_filename`: Path to the JSON file with task definitions.
-* `state_filename`: File to save/load answered queries.
+* `answered_queries_filename`: File to save/load answered queries.
 * `load_answers`: Whether to load previously saved answers.
 * `verbose`: Whether to print detailed output during query answering.
 
