@@ -43,21 +43,37 @@ def run_query_loop(qm: QueryManager, task_dict: dict, state_filename: str, verbo
 
 def summarize_learning_space(surmise_function: SurmiseFunction, item_ids: list):
     """Print resulting knowledge states and Hasse diagram from surmise function."""
-    states = surmise_to_states(surmise_function)
-    #implications = surmise_to_implications(surmise_function)
+    #states = surmise_to_states(surmise_function)
 
-    print("\nKnowledge States:")
-    for state in states:
-        print(state)
+    # Implications from the Surmise function
+    print("\nDependencies:")
+    for item in item_ids:
+        print(f"\n------{item}------")
+        implications = surmise_function.get_clauses(item)
+        if implications:
+            all_implications = []
+            for implication in surmise_function.get_clauses(item):
+                target_item = implication.conclusion
+                prerequisites = set(list(implication.prerequisites))
+                prerequisites.remove(target_item)
+                all_implications.append(prerequisites)
+                
+            print(f"{all_implications} ⊢ {target_item}")
+        else:
+            print("No dependencies")
 
-    plot_hasse(states)
+    #print("\nKnowledge States:")
+    #for state in states:
+    #    print(state)
+
+    #plot_hasse(states)
 
 
 def main():
     # Parameters
     load_answers = True
-    state_filename = "answered_queries.json" # example/example_answered_queries.json
-    items_filename = "pika_items.json"
+    answered_queries_filename = "example/example_answered_queries.json" # example/example_answered_queries.json
+    items_filename = "example_items.json"
     verbose = True
 
     # Step 1: Load data
@@ -73,10 +89,10 @@ def main():
     queries = generate_queries_by_block(task_ids)
     qm = QueryManager(learning_space, queries)
     if load_answers:
-        qm.load_state(state_filename)
+        qm.load_state(answered_queries_filename)
 
     # Step 4: Ask expert queries (GUI)
-    #run_query_loop(qm, task_dict, state_filename, verbose)
+    run_query_loop(qm, task_dict, answered_queries_filename, verbose)
 
     # Step 5: Finalize learning space
     print("\nFinal Learning Space:")
