@@ -9,7 +9,7 @@ from data.generate_queries import generate_queries_by_block
 from model.surmise_function import SurmiseFunction
 from model.learning_space import LearningSpace
 
-from utils.hasse import hasse
+from utils.hasse import plot_hasse
 from utils.surmise_to_implications import surmise_to_implications
 from utils.surmise_to_states import surmise_to_states
 
@@ -45,19 +45,19 @@ def run_query_loop(qm: QueryManager, task_dict: dict, state_filename: str, verbo
 def summarize_learning_space(surmise_function: SurmiseFunction, item_ids: list):
     """Print resulting knowledge states and Hasse diagram from surmise function."""
     states = surmise_to_states(surmise_function)
-    implications = surmise_to_implications(surmise_function)
+    #implications = surmise_to_implications(surmise_function)
 
     print("\nKnowledge States:")
     for state in states:
         print(state)
 
-    #hasse(imp=implications, items=len(item_ids), labels=item_ids)
+    plot_hasse(states)
 
 
 def main():
     # Parameters
     load_answers = True
-    state_filename = "item_states.json"
+    state_filename = "answered_queries.json" # example/example_answered_queries.json
     items_filename = "example_items.json"
     verbose = True
 
