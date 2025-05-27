@@ -10,7 +10,6 @@ from model.surmise_function import SurmiseFunction
 from model.learning_space import LearningSpace
 
 from utils.hasse import plot_hasse
-from utils.surmise_to_implications import surmise_to_implications
 from utils.surmise_to_states import surmise_to_states
 
 
