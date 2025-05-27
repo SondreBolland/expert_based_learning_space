@@ -57,7 +57,7 @@ def main():
     # Parameters
     load_answers = True
     state_filename = "answered_queries.json" # example/example_answered_queries.json
-    items_filename = "example_items.json"
+    items_filename = "pika_items.json"
     verbose = True
 
     # Step 1: Load data
@@ -76,7 +76,7 @@ def main():
         qm.load_state(state_filename)
 
     # Step 4: Ask expert queries (GUI)
-    run_query_loop(qm, task_dict, state_filename, verbose)
+    #run_query_loop(qm, task_dict, state_filename, verbose)
 
     # Step 5: Finalize learning space
     print("\nFinal Learning Space:")
