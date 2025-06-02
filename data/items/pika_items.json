@@ -6,14 +6,14 @@
                 {
                     "id": "Ex01",
                     "text": "What does this program print?",
-                    "code": "a = 12\nresult = a + a\n\nprint(result)",
-                    "solution": "24"
+                    "code": "print(2 + 3)",
+                    "solution": "5"
                 },
                 {
                     "id": "Ex02",
                     "text": "What does this program print?",
-                    "code": "n = 0\nn = n + 1\nn = n + 1\n\nprint(n)",
-                    "solution": "2"
+                    "code": "a = 12\nresult = a + a\n\nprint(result)",
+                    "solution": "24"
                 },
                 {
                     "id": "Ex03",
@@ -23,6 +23,18 @@
                 },
                 {
                     "id": "Ex04",
+                    "text": "What does this program print?",
+                    "code": "a = '123'\nresult = a + a\n\nprint(result)",
+                    "solution": "123123"
+                },
+                {
+                    "id": "Ex05",
+                    "text": "What does this program print?",
+                    "code": "n = 0\nn = n + 1\nn = n + 1\n\nprint(n)",
+                    "solution": "2"
+                },
+                {
+                    "id": "Ex06",
                     "text": "What does this program print?",
                     "code": "n = '1'\nn = n + '1'\nn = n + '1'\n\nprint(n)",
                     "solution": "111"
@@ -74,15 +86,25 @@
                 {
                     "id": "Bo01",
                     "text": "For each of the following expressions, choose which boolean value (True/False) it evaluates to.",
-                    "code": "2 > 7\n(10*2) < 9\n(10 + 3) >= 13\n(10 * 2) < 9"
+                    "code": "2 > 7\n(10*2) < 9\n(10 + 3) >= 13\n(10 * 2) < 9\n(1 + 3) < (2 * 3)"
                 },
                 {
                     "id": "Bo02",
                     "text": "For each of the following expressions, choose which boolean value (True/False) it evaluates to.",
-                    "code": "(3 < 7) and (7 < 9)\n(3 < 7) or (7 < 9)\nTrue or False\nTrue or True\nnot (True != True)"
+                    "code": "100 != 100\n(3 < 7) and (7 < 9)\n(5 < 7) and (4 > 5)\n(3 < 7) or (7 < 9)\n(5 < 7) or (4 > 5)\nnot (100 ! = 100)\nTrue or False\nTrue or True\nnot (True != True)"
                 },
                 {
                     "id": "Bo03",
+                    "text": "Given the variable n = 5, determine whether each of the following expressions evaluates to True or False.",
+                    "code": "n < 10\n100 == n\n(n < 7) and (4 > n)\nn <= 5\nnot (n < 10)"
+                },
+                {
+                    "id": "Bo04",
+                    "text": "Given the variables a = 4, b = 6, and c = 10, determine whether each of the following expressions evaluates to True or False.",
+                    "code": "a + b == c\n(a * 2 < c) and (b + a > 5)\nnot (c - a < b)\n(a + b == c) or (b * 2 == c)\n(a + b < c) and not (b - a < 2)"
+                },
+                {
+                    "id": "Bo05",
                     "text": "Assume that a, b and c are variables of type int. Consider the following three expressions. Which of the expressions above is (are) always true if at least two of a, b and c are equal?",
                     "code": "I.   (a == b) and (a == c) and (b == c)\nII.  (a == b) or (a == c) or (b == c)\nIII. ((a - b) * (a - c) * (b - c)) == 0",
                     "options": [
@@ -116,9 +138,9 @@
                 },
                 {
                     "id": "Li03",
-                    "text": "What is the value of variable a when it is printed on line 6? What is the value of variable b when it is printed on line 7?",
-                    "code": "ls = range(5)\n\na = ls[4]\nb = ls[1]\n\nprint(a)\nprint(b)",
-                    "solution": "1 4"
+                    "text": "What does this program print?",
+                    "code": "a = [10, 20, 30]\na[1] = 80\n\nprint(a[1])",
+                    "solution": "80"
                 },
                 {
                     "id": "Li04",
@@ -159,6 +181,19 @@
                 {
                     "id": "Cond02",
                     "text": "What does this program print?",
+                    "code": "if 100 != 100:\n    print(1)\nelse\n    print(2):",
+                    "options": [
+                        "Nothing",
+                        "1",
+                        "2",
+                        "12",
+                        "I don't know"
+                    ],
+                    "solution": "2"
+                },
+                {
+                    "id": "Cond03",
+                    "text": "What does this program print?",
                     "code": "if (10*2) < 9:\n    print(1)\nelif 100 == 100:\n    print(2)\nelse:\n    print(3)",
                     "options": [
                         "1",
@@ -173,13 +208,13 @@
                     "solution": "2"
                 },
                 {
-                    "id": "Cond03",
+                    "id": "Cond04",
                     "text": "What does this program print?",
                     "code": "a = 5\nb = 3\nc = 9\n\nif (a < b) and (a < c):\n    num = b + c\nelif (b < a) and (b < c):\n    num = a + c\nelse:\n    num = a + b\n\nprint(num)",
                     "solution": "14"
                 },
                 {
-                    "id": "Cond01",
+                    "id": "Cond05",
                     "text": "What does this program print?",
                     "code": "x = False\ny = True\nz = False\n\n\nif MISSING_CODE1:\n    print('Go you!')\nelse:\n    print('You rock!')\n\n\nif MISSING_CODE2:\n    print('Go you!')\nelse:\n    print('You rock!')",
                     "options": [
@@ -212,47 +247,7 @@
                     "solution": "100"
                 },
                 {
-                    "id": "Loop04",
-                    "text": "What is the value of variable i when it is printed on line 10?\nWhat is the value of variable odd when it is printed on line 11?",
-                    "code": "ls = [3, 6, 8, 1, 2, 0, 7, 2, 9]\ni = 0\nodd = 0\n\nwhile i < len(ls) and ls[i] != 0:\n    if (ls[i] % 2) == 1:\n        odd = odd + 1\n    i = i + 1\n\nprint(i)\nprint(odd)",
-                    "options": [
-                        "3 1",
-                        "3 2",
-                        "4 2",
-                        "5 2",
-                        "I don't know"
-                    ],
-                    "solution": "5 2"
-                },
-                {
-                    "id": "Loop06",
-                    "text": "What does this program print?",
-                    "code": "n = 0\nls = [1, 1, 3]\nfor e in ls:\n    n = n + 1\n\nprint(n)",
-                    "solution": "5"
-                },
-                {
-                    "id": "Loop07",
-                    "text": "What does this program print?",
-                    "code": "for i in range(3):\n    print(1)\nprint(2)",
-                    "options": [
-                        "NOTE: Spaces are supposed to be line breakes for these answers",
-                        "1 1 1 2",
-                        "1 2 1 2 1 2",
-                        "1 1 1",
-                        "1 2",
-                        "1 1 2",
-                        "I don't know"
-                    ],
-                    "solution": "1\n1\n1\n2"
-                },
-                {
-                    "id": "Loop08",
-                    "text": "What does this program print?",
-                    "code": "n = 0\nls = [-1, 4, -3, 0, -10, 5]\nfor e in ls:\n    if e > 0:\n        n = n + e\n\nprint(n)",
-                    "solution": "9"
-                },
-                {
-                    "id": "Loop01",
+                    "id": "Loop03",
                     "text": "Which of the following statements best describes the execution of the while loop?",
                     "code": "i = 1\nj = 0\nwhile j < 10:\n    print('Book', i)\n    i = i + 1",
                     "options": [
@@ -263,10 +258,22 @@
                         "j is equal to 0, which is less than 10; so print Book 1",
                         "I don't know"
                     ],
-                    "solution": "j is always equal to 0, which is less than 10; so print 'Book i' an infinite number of times"
+                    "solution": "j is always equal to 0, which is less than 10; so print 'Book i' an infinite number of times, e.g. Book 1, Book 2, Book 3, ..."
                 },
                 {
-                    "id": "Loop02",
+                    "id": "Loop04",
+                    "text": "What does this program print?",
+                    "code": "n = 5\nwhile n > 0:\n    print(n)\n    n = n - 2",
+                    "solution": "5\n3\n1"
+                },
+                {
+                    "id": "Loop05",
+                    "text": "What does this program print?",
+                    "code": "n = 6\nwhile n > 0:\n    print(n)\n    if n > 3:\n        n = n - 2\n    else:\n        n = n - 1",
+                    "solution": "6\n4\n2\n1"
+                },
+                {
+                    "id": "Loop06",
                     "text": "Which solution to a problem is not best suited for a for-loop?",
                     "code": "",
                     "options": [
@@ -278,6 +285,36 @@
                         "I don't know"
                     ],
                     "solution": "A solution that requires looping until a certain condition is met."
+                },
+                {
+                    "id": "Loop07",
+                    "text": "What does this program print?",
+                    "code": "n = 0\nls = [1, 1, 3]\nfor e in ls:\n    n = n + 1\n\nprint(n)",
+                    "solution": "3"
+                },
+                {
+                    "id": "Loop08",
+                    "text": "What does this program print?",
+                    "code": "ls = [1, 2, 3]\nfor x in ls:\n    print(1)\nprint(2)",
+                    "solution": "1\n1\n1\n2"
+                },
+                {
+                    "id": "Loop09",
+                    "text": "What does this program print?",
+                    "code": "n = 0\nls = [6, 3, 1, 0, 2]\nfor e in ls:\n    n = n + e\n\nprint(n)",
+                    "solution": "12"
+                },
+                {
+                    "id": "Loop10",
+                    "text": "What does this program print?",
+                    "code": "n = 0\nls = [-1, 4, -3, 0, -10, 5]\nfor e in ls:\n    if e > 0:\n        n = n + e\n\nprint(n)",
+                    "solution": "9"
+                },
+                {
+                    "id": "Loop11",
+                    "text": "What does this program print?",
+                    "code": "n = 0\nls = [1, 2, 3]\nfor x in ls:\n    for y in ls:\n        n = n + 1\nprint(n)",
+                    "solution": "9"
                 }
             ]
         }
@@ -287,7 +324,19 @@
             "id": "Func",
             "tasks": [
                 {
-                    "id": "Fn01",
+                    "id": "Function01",
+                    "text": "What does this program print?",
+                    "code": "def f(x):\n    x = x + 2\n    return x - 1\n\nprint(f(6))",
+                    "solution": "7"
+                },
+                {
+                    "id": "Function02",
+                    "text": "What does this program print?",
+                    "code": "def f():\n    print(1)\n    print(2)\n\nf()\nf()",
+                    "solution": "1\n2\n1\n2"
+                },
+                {
+                    "id": "Function03",
                     "text": "Which of the following statements best describes the execution of the function call add(8, 5, 12)?",
                     "code": "def add(a, b, c):\n    num = 0\n    if (a < b) and (a < c):\n        num = b + c\n        return num\n    elif (b < a) and (b < c):\n        num = a + c\n        return num\n    else:\n        num = a + b\n        return num\n    print(num)",
                     "options": [
@@ -300,39 +349,7 @@
                     "solution": "Nothing will ever be printed from this function"
                 },
                 {
-                    "id": "Fn02",
-                    "text": "What is the value of a when it is printed on line 8?\nWhat is the value of b when it is printed on line 9?",
-                    "code": "def f(x):\n    return 2 * x\n\nx = 5\na = f(x)\nb = f(x)\n\nprint(a)\nprint(b)",
-                    "solution": "10 10"
-                },
-                {
-                    "id": "Fn03a",
-                    "text": "What does this program print?",
-                    "code": "def f(x):\n    x = x + 2\n    return x - 1\n\ndef g(x):\n    x = f(x) + 3\n    return x\n\nprint(f(6))",
-                    "solution": "7"
-                },
-                {
-                    "id": "Fn03b",
-                    "text": "What does this program print?",
-                    "code": "def f(x):\n    x = x + 2\n    return x - 1\n\ndef g(x):\n    x = f(x) + 3\n    return x\n\nprint(f(2) + f(3))",
-                    "solution": "13"
-                },
-                {
-                    "id": "Fn03c",
-                    "text": "What does this program print?",
-                    "code": "def f(x):\n    x = x + 2\n    return x - 1\n\ndef g(x):\n    x = f(x) + 3\n    return x\n\nprint(g(3))",
-                    "solution": "11"
-                },
-                {
-                    "id": "Fn03d",
-                    "text": "What does this program print?",
-                    "code": "def f(x):\n    x = x + 2\n    return x - 1\n\ndef g(x):\n    x = f(x) + 3\n    return x\n\nprint(f(g(5)))",
-                    "solution": "13"
-                }
-            ],
-            "Model": [
-                {
-                    "id": "Fn01",
+                    "id": "Function04",
                     "text": "Which of the following can be used to replace # Missing code so that between will work as intended?",
                     "code": "def between(x, lower, upper):\n    # Missing code",
                     "options": [
@@ -346,8 +363,8 @@
                     "solution": "return (lower <= x <= upper)"
                 },
                 {
-                    "id": "Fn02",
-                    "text": "Which of the following can be used to replace the body of the function calculate so that the modified version will return the same result as the original version for all x?",
+                    "id": "Function05",
+                    "text": "Which of the following can be used to replace the body of the function calculate so that the modified version of calculate will return the same result as the original version for all x?",
                     "code": "def calculate(x):\n    x = x + x\n    x = x + x\n    x = x + x\n    return x",
                     "options": [
                         "return 3 + x",
@@ -358,6 +375,30 @@
                         "I don't know"
                     ],
                     "solution": "return 8 * x"
+                },
+                {
+                    "id": "Function06",
+                    "text": "What is the value of a when it is printed on line 8? What is the value of b when it is printed on line 9?",
+                    "code": "def f(x):\n    return 2 * x\n\nx = 5\na = f(x)\nb = f(x)\n\nprint(a)\nprint(b)",
+                    "solution": "10\n10"
+                },
+                {
+                    "id": "Function07a",
+                    "text": "What does this program print?",
+                    "code": "def f(x):\n    x = x + 2\n    return x - 1\n\ndef g(x):\n    x = f(x) + 3\n    return x\n\nprint(f(2) + f(3))",
+                    "solution": "13"
+                },
+                {
+                    "id": "Function07b",
+                    "text": "What does this program print?",
+                    "code": "def f(x):\n    x = x + 2\n    return x - 1\n\ndef g(x):\n    x = f(x) + 3\n    return x\n\nprint(g(3))",
+                    "solution": "9"
+                },
+                {
+                    "id": "Function07c",
+                    "text": "What does this program print?",
+                    "code": "def f(x):\n    x = x + 2\n    return x - 1\n\ndef g(x):\n    x = f(x) + 3\n    return x\n\nprint(f(g(5)))",
+                    "solution": "11"
                 }
             ]
         }

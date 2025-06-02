@@ -20,8 +20,10 @@ class LearningSpace:
         self.r_store = []  # Temporary store for pending queries
         self.P_yes = set()
         self.P_no = set()
+        self.inferred_yes = set()
+        self.inferred_no = set()
         self.queries_answered = 0
-        
+
 
     def apply_query(self, query: Query):
         """
@@ -30,7 +32,7 @@ class LearningSpace:
         If query is positive, check if it passes the hs-test. If it passes, accept and update the surmise function, else add to pending table.
         
         :param query: The query to be applied.
-        """
+        """        
         ### If the query response is "Yes" ###
         if query.answer == 1:
             if hs_test(query, self.surmise_function):
@@ -139,6 +141,8 @@ class LearningSpace:
 
             # If we inferred anything new, update and keep looping
             if new_yes or new_no:
+                self.inferred_yes.update(new_yes)
+                self.inferred_no.update(new_no)
                 self.P_yes.update(new_yes)
                 self.P_no.update(new_no)
                 changed = True
@@ -196,8 +200,11 @@ class LearningSpace:
             ant = "{" + ",".join(sorted(q.antecedent)) + "}"
             lines.append(f"  {ant} → {q.question}")
             
-        # 7) Queries answered vs queries infered
-        lines.append(f"\nQueries answered: {self.queries_answered}")
-        queries_infered = len(self.P_yes) + len(self.P_no) - self.queries_answered
-        lines.append(f"Queries infered: {queries_infered}")
+        # 7) Query statistics
+        lines.append("\nQuery statistics:")
+        lines.append(f"  Answered by expert: {self.queries_answered}")
+        lines.append(f"  Inferred: {len(self.inferred_yes) + len(self.inferred_no)}")
+        lines.append(f"    - Inferred YES: {len(self.inferred_yes)}")
+        lines.append(f"    - Inferred NO:  {len(self.inferred_no)}")
+        
         return "\n".join(lines)

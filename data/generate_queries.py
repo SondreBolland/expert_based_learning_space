@@ -6,10 +6,12 @@ from model.query import Query
 def generate_queries_by_block(
     all_item_ids: List[str],
     max_block_size: int = 4,
-    max_queries_per_block: Dict[int, int] = {1: None, 2: None, 3: None, 4: None}
+    max_queries_per_block: Dict[int, int] = {1: None, 2: None, 3: None, 4: None},
+    verbose = False
 ) -> List[Query]:
     queries = []
-
+    
+    block_count = {}
     for block_size in range(1, max_block_size + 1):
         possible_antecedents = list(itertools.combinations(all_item_ids, block_size))
         block_queries = []
@@ -34,5 +36,9 @@ def generate_queries_by_block(
 
         random.shuffle(block_queries)
         queries.extend(block_queries)
+        
+        if verbose:
+            print(f"Block {block_size} queries: {len(block_queries)}")
+            block_count.update({block_size: len(block_queries)})
 
-    return queries
+    return queries, block_count

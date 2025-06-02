@@ -34,4 +34,4 @@ class Query:
         )
 
     def __hash__(self) -> int:
-        return hash((frozenset(self.antecedent), self.question, self.answer))
+        return hash((frozenset(self.antecedent), self.question))

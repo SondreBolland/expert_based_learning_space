@@ -43,7 +43,8 @@ def run_query_loop(qm: QueryManager, task_dict: dict, state_filename: str, verbo
 
 def summarize_learning_space(surmise_function: SurmiseFunction, item_ids: list):
     """Summarize the learning space"""
-    if len(item_ids) > 20:
+    max_number_items_for_hasse = 20
+    if len(item_ids) > max_number_items_for_hasse:
         display_dependencies(surmise_function, item_ids)
     else:
         display_hasse(surmise_function, item_ids)
@@ -81,8 +82,12 @@ def display_hasse(surmise_function: SurmiseFunction, item_ids: list):
 def main():
     # Parameters
     load_answers = True
-    answered_queries_filename = "example/example_answered_queries.json" # example/example_answered_queries.json
-    items_filename = "example_items.json"
+    answered_queries_filename = "answered_queries.json"
+    items_filename = "pika_items.json"
+    
+    ### COMMENT IN THE NEXT TWO LINES TO USE EXAMPLE ITEMS ###
+    #answered_queries_filename = "example/example_answered_queries.json"
+    #items_filename = "example_items.json"
     verbose = True
 
     # Step 1: Load data
@@ -95,8 +100,8 @@ def main():
     task_ids = learning_space.items
 
     # Step 3: Generate and manage queries
-    queries = generate_queries_by_block(task_ids)
-    qm = QueryManager(learning_space, queries)
+    queries, block_count = generate_queries_by_block(task_ids, verbose=verbose, max_queries_per_block={1: 3000, 2: 0, 3: 0, 4: 0})
+    qm = QueryManager(learning_space, queries, block_count)
     if load_answers:
         qm.load_state(answered_queries_filename)
 

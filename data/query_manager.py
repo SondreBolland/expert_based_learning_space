@@ -1,13 +1,14 @@
-from typing import List, Optional
+from typing import Dict, List, Optional
 from model.query import Query
 from model.learning_space import LearningSpace
 import json
 import os
 
 class QueryManager:
-    def __init__(self, learning_space: LearningSpace, queries: Optional[List[Query]] = None):
+    def __init__(self, learning_space: LearningSpace, queries: Optional[List[Query]] = None, block_count: Dict[int, int] = {1: 0, 2: 0, 3: 0, 4: 0}):
         self.learning_space = learning_space  # Reference to the learning space for query filtering
         self.all_queries: List[Query] = queries.copy() if queries else []
+        self.block_count = block_count
         self.active_queries: List[Query] = queries.copy() if queries else []
         self.answered_queries: List[Query] = []
         self.deactivated_queries: List[Query] = []
@@ -23,6 +24,7 @@ class QueryManager:
         if not self.active_queries:  # If no queries left after filtering
             return None
         
+        print(f"Active queries: {len(self.active_queries)}")
         if random:
             return random.choice(self.active_queries)
         return self.active_queries[0]
@@ -37,13 +39,13 @@ class QueryManager:
                 queries_to_remove.append(query)
 
         # Deactivate queries that are redundant or inferred
-        for query in queries_to_remove:
-            self.deactivate_queries([query])
+        self.deactivate_queries(queries_to_remove)
+            
 
     def query_inferable_in_learning_space(self, query: Query) -> bool:
         """Check if a query is already inferred in the learning space."""
         # If the query is already answered or inferred through inferences, return True
-        if query in self.learning_space.P_yes or query in self.learning_space.P_no:
+        if query in self.learning_space.P_yes or query in self.learning_space.P_no or query in self.learning_space.inferred_no or query in self.learning_space.inferred_yes:
             return True
         return False
 
@@ -57,8 +59,9 @@ class QueryManager:
     def deactivate_queries(self, queries_to_deactivate: List[Query]):
         """Deactivate queries that are no longer necessary."""
         for query in queries_to_deactivate:
-            if query in self.active_queries:
+            if query in self.active_queries and (not (query in self.deactivated_queries)):
                 self.active_queries.remove(query)
+                self.block_count.update({query.antecedent_size(): self.block_count.get(query.antecedent_size())-1})
                 self.deactivated_queries.append(query)
 
     def save_state(self, filename):
@@ -94,8 +97,8 @@ class QueryManager:
                 self.record_answer(query, answer)
 
             print(f"Loaded {len(data.get('answers', []))} answers from {filename}")
-        except:
-            print("Nothing to load")
+        except Exception as inst:
+            print(inst)  
             
         print(f"Active query size: {len(self.active_queries)}")
 
