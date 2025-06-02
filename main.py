@@ -54,7 +54,7 @@ def display_dependencies(surmise_function: SurmiseFunction, item_ids: list):
     """Print resulting item dependencies from surmise function"""
     # Implications from the Surmise function
     print("\nDependencies:")
-    for item in item_ids:
+    for item in sorted(item_ids):
         print(f"\n------{item}------")
         implications = surmise_function.get_clauses(item)
         if implications:

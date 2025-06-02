@@ -55,15 +55,12 @@ class LearningSpace:
         Run the second stage of the adapted QUERY algorithm.
         Process the pending table using the HS-test until it is empty.
         """
-        count = 0
         while self.pending_table:
             self.r_store = list(self.pending_table)
             old_surmise = copy.deepcopy(self.surmise_function)
             self.pending_table = []
 
             for query in self.r_store:
-                count += 1
-                print(count)
                 if hs_test(query, self.surmise_function):
                     # Accept the query
                     self.P_yes.add(query)
