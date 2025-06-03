@@ -13,6 +13,9 @@ def generate_queries_by_block(
     
     block_count = {}
     for block_size in range(1, max_block_size + 1):
+        if max_queries_per_block[block_size] == 0:
+            print(f"Block {block_size} queries: 0")
+            continue
         possible_antecedents = list(itertools.combinations(all_item_ids, block_size))
         block_queries = []
 
