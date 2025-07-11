@@ -1,5 +1,7 @@
 import os
 
+import argparse
+
 import data.get_data as get_data
 import data.ask_experts_gui as ask_experts_gui
 
@@ -79,19 +81,9 @@ def display_hasse(surmise_function: SurmiseFunction, item_ids: list):
     plot_hasse(knowledge_states)
 
 
-def main():
-    # Parameters
-    load_answers = True
-    answered_queries_filename = "answered_queries.json"
-    items_filename = "pika_items.json"
-    
-    ### COMMENT IN THE NEXT TWO LINES TO USE EXAMPLE ITEMS ###
-    #answered_queries_filename = "example/example_answered_queries.json"
-    #items_filename = "example_items.json"
-    verbose = True
-
+def main( args ):
     # Step 1: Load data
-    data = get_data.get_data(items_filename)
+    data = get_data.get_data(args.items_filename)
     tasks, task_dict = load_tasks(data)
     print(f'Number of tasks: {len(tasks)}')
 
@@ -100,13 +92,13 @@ def main():
     task_ids = learning_space.items
 
     # Step 3: Generate and manage queries
-    queries, block_count = generate_queries_by_block(task_ids, verbose=verbose, max_queries_per_block={1: 3000, 2: 0, 3: 0, 4: 0})
+    queries, block_count = generate_queries_by_block(task_ids, verbose=args.verbose, max_queries_per_block={1: 3000, 2: 0, 3: 0, 4: 0})
     qm = QueryManager(learning_space, queries, block_count)
-    if load_answers:
-        qm.load_state(answered_queries_filename)
+    if args.load_answers:
+        qm.load_state(args.answered_queries_filename)
 
     # Step 4: Ask expert queries (GUI)
-    run_query_loop(qm, task_dict, answered_queries_filename, verbose)
+    run_query_loop(qm, task_dict, args.answered_queries_filename, args.verbose)
 
     # Step 5: Finalize learning space
     print("\nFinal Learning Space:")
@@ -118,4 +110,27 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    parser = argparse.ArgumentParser(
+            prog="expert_based_learning_space",
+            description="Computes learning space models based on expert input",
+            epilog="Program presents expert queries in a GUI"
+            )
+
+    parser.add_argument('-i', '--infile',
+            dest="items_filename",
+            default="pika_items.json",
+            help="Output file for answered queries")
+    parser.add_argument('-o', '--outfile',
+            dest="answered_queries_filename",
+            default="answered_queries.json",
+            help="Filename for items file")
+    parser.add_argument('-L', '--load',
+            dest="load_answers",action="store_false",
+            help="Quiet mode (opposite of verbose)")
+    parser.add_argument('-q', '--quiet',
+            dest="verbose",action="store_false",
+            help="Quiet mode (opposite of verbose)")
+    args = parser.parse_args()
+    print( args )
+
+    # main(args)
