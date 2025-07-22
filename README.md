@@ -34,17 +34,17 @@ The tool loads a collection of programming tasks, generates expert queries about
 
 ## Running the Tool
 
-Edit the parameters in the `main()` function to specify:
+Command line arguments
 
-* `items_filename`: Path to the JSON file with task definitions.
-* `answered_queries_filename`: File to save/load answered queries.
-* `load_answers`: Whether to load previously saved answers.
-* `verbose`: Whether to print detailed output during query answering.
++ `-q` : turns of the detailed output during query answering.
++ `-L` : load previously saved answers.
++ `-i` : Path to the JSON file with task definitions.
++ `-o` : File to save/load answered queries.
 
 Run the script:
 
 ```bash
-python main.py
+python main.py [-q] [-L] [-i infile] [-o outfile]
 ```
 
 ---
